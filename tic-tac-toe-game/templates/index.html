@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe: Human vs Computer</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tic-Tac-Toe: Human vs Computer</h1>
+        <div id="gameboard">
+            {% for row in range(3) %}
+                <div class="row">
+                    {% for column in range(3) %}
+                        <div class="cell" id="cell-{{ row }}-{{ column }}" onclick="humanMove({{ row }}, {{ column }})"></div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            <p>Human: <span id="human-score">{{ humanScore }}</span></p>
+            <p>Computer: <span id="computer-score">{{ computerScore }}</span></p>
+        </div>
+        <div class="game-status">
+            <p id="game-status"></p>
+        </div>
+        <button id="restart-button" onclick="restartGame()">Restart Game</button>
+    </div>
+    <script src="static/js/scripts.js"></script>
+</body>
+</html>
