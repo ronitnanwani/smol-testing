@@ -50,19 +50,18 @@ document.addEventListener("DOMContentLoaded", () => {
     return gameBoardState.every(row => row.every(cell => cell !== null));
   }
 
-  function computerMove() {
-    const response = fetch("http://localhost:5000/computer_move", {
-      mode: "no-cors",
+  async function computerMove() {
+    var mes={};
+    const handlemessage = (msg) => {
+      mes=msg;
+    }
+    await fetch("http://127.0.0.1:5000/computer_move", {
       method: "POST",
       body: JSON.stringify({"gameBoardState":gameBoardState}),
-    });
-
-    console.log("Hello World");
-    console.log(response);
-    console.log(response.json());
-    // const{row,column} = await response.json();
-    // console.log(row,column);
-    return ({"row":1,"column":2});
+    }).then(response => response.json()).then(message => (
+      handlemessage(message)
+    ))
+    return ({"row":mes["row"],"column":mes["column"]});
   }
 
   function humanMove(event) {
@@ -82,23 +81,23 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (checkTie()) {
         gameStatus.textContent = "Tie Game!";
       } else {
-        // console.log("Computer turn");
         currentPlayer = "computer";
         gameStatus.textContent = "Computer Turn";
-          row,column=computerMove();
-          // console.log(row,column);
-          makeMove(row, column, currentPlayer);
-          const winner = checkWinner();
-          if (winner) {
-            gameStatus.textContent = winner === "human" ? "You Won!" : "Computer Won!";
-            winner === "human" ? humanScore++ : computerScore++;
-            updateLeaderboard();
-          } else if (checkTie()) {
-            gameStatus.textContent = "Tie Game!";
-          } else {
-            currentPlayer = "human";
-            gameStatus.textContent = "Your Turn";
-          }
+          computerMove().then(({ row, column }) => {
+            console.log(row,column);
+            makeMove(row, column, currentPlayer);
+            const winner = checkWinner();
+            if (winner) {
+              gameStatus.textContent = winner === "human" ? "You Won!" : "Computer Won!";
+              winner === "human" ? humanScore++ : computerScore++;
+              updateLeaderboard();
+            } else if (checkTie()) {
+              gameStatus.textContent = "Tie Game!";
+            } else {
+              currentPlayer = "human";
+              gameStatus.textContent = "Your Turn";
+            }
+          });
       }
     }
   }

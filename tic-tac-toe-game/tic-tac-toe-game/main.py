@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify,json
+from flask_cors import CORS, cross_origin
 # from gameboard import GameBoard
-# from computer_player import computerMove
+from computer_player import computerMove
 # from human_player import human_move
 import sqlite3
 import os
@@ -8,8 +9,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__)
+CORS(app, support_credentials=True)         
 
 @app.route('/')
+@cross_origin(supports_credentials=True)
 def index():
     return render_template('index.html')
 
@@ -24,15 +27,15 @@ def index():
 #     return jsonify(game_board.check_winner())
 
 @app.route('/computer_move', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
 def computer_move():
     # print("Reached")
     requestt=json.loads(request.data)
     game_board=requestt['gameBoardState']
-    print(game_board)
+    # print(game_board)
     # game_board = GameBoard()
-    # computer_player = ComputerPlayer(game_board)
-    # move = computer_player.computer_move()
-    return ({"row":1,"column":2})
+    move = computerMove(game_board)
+    return ({"row":move[0],"column":move[1]})
 
 # @app.route('/update_leaderboard', methods=['POST'])
 # def update_leaderboard():
@@ -58,4 +61,4 @@ def computer_move():
 #     return jsonify({'human_wins': result[0], 'computer_wins': result[1]})
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000,debug=True)
+    app.run(debug=True)
