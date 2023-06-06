@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe: Human vs Computer</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <script tye="module" src="../static/js/scripts.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Tic-Tac-Toe: Human vs AI</h1>
+        <div id="gameboard">
+                    <div class="cell" id="cell-0-0" onclick="humanMove(0, 0)"></div>
+                    <div class="cell" id="cell-0-1" onclick="humanMove(0, 1)"></div>
+                    <div class="cell" id="cell-0-2" onclick="humanMove(0, 2)"></div>
+                    <div class="cell" id="cell-1-0" onclick="humanMove(1, 0)"></div>
+                    <div class="cell" id="cell-1-1" onclick="humanMove(1, 1)"></div>
+                    <div class="cell" id="cell-1-2" onclick="humanMove(1, 2)"></div>
+                    <div class="cell" id="cell-2-0" onclick="humanMove(2, 0)"></div>
+                    <div class="cell" id="cell-2-1" onclick="humanMove(2, 1)"></div>
+                    <div class="cell" id="cell-2-2" onclick="humanMove(2, 2)"></div>
+        </div>
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            <p>Human: <span id="human-score">{{ humanScore }}</span></p>
+            <p>Computer: <span id="computer-score">{{ computerScore }}</span></p>
+        </div>
+        <div class="game-status">
+            <p id="game-status"></p>
+        </div>
+        <button id="restart-button" onclick="restartGame()">Restart Game</button>
+    </div>
+
+</body>
+</html>
